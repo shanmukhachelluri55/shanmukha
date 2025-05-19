@@ -10,14 +10,16 @@ const mobileNavLinks = document.querySelectorAll('.mobile-nav-link');
 const contactForm = document.getElementById('contact-form');
 const downloadCvBtn = document.getElementById('download-cv');
 
-// Initialize Particles
+// Initialize Particles and Mouse Effects
 document.addEventListener('DOMContentLoaded', () => {
   // Initialize background particles
   new Particles('bg-canvas', {
     particleCount: 80,
     particleRadius: 2,
     lineDistance: 150,
-    speed: 0.5
+    speed: 0.5,
+    mouseEffect: true, // Enable mouse interaction
+    mouseRadius: 100 // Radius of mouse influence
   });
   
   // Check for saved theme
@@ -44,6 +46,29 @@ document.addEventListener('DOMContentLoaded', () => {
   
   // Highlight current section in navigation
   updateActiveNavItem();
+});
+
+// Download CV functionality
+downloadCvBtn.addEventListener('click', async (e) => {
+  e.preventDefault();
+  const cvUrl = 'https://drive.google.com/file/d/1U5kx0oaQJaVU2g-gNMdqHES5AjRADfv4/view?usp=drive_link';
+  
+  try {
+    const response = await fetch(cvUrl);
+    if (!response.ok) throw new Error('Download failed');
+    
+    // Create a temporary link to trigger download
+    const link = document.createElement('a');
+    link.href = cvUrl;
+    link.target = '_blank';
+    link.rel = 'noopener noreferrer';
+    document.body.appendChild(link);
+    link.click();
+    document.body.removeChild(link);
+  } catch (error) {
+    console.error('Error downloading CV:', error);
+    window.open(cvUrl, '_blank', 'noopener,noreferrer');
+  }
 });
 
 // Mobile Menu Toggle
@@ -203,12 +228,6 @@ contactForm.addEventListener('submit', (e) => {
     submitBtn.disabled = false;
     submitBtn.innerHTML = originalBtnText;
   }, 1500);
-});
-
-// Download CV (Demo functionality)
-downloadCvBtn.addEventListener('click', (e) => {
-  e.preventDefault();
-  alert('This is a demo feature. In a real implementation, this would download your CV.');
 });
 
 // Additional interaction and animations

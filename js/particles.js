@@ -14,6 +14,8 @@ class Particles {
       speed: 1,
       directionX: -1,
       directionY: 1,
+      mouseEffect: true,
+      mouseRadius: 100,
       responsive: [
         {
           breakpoint: 768,
@@ -38,6 +40,7 @@ class Particles {
     this.particles = [];
     this.animationFrame = null;
     this.isDarkMode = document.documentElement.classList.contains('dark');
+    this.mouse = { x: null, y: null, radius: this.options.mouseRadius };
     
     this.init();
     this.bindEvents();
@@ -55,6 +58,20 @@ class Particles {
   
   bindEvents() {
     window.addEventListener('resize', this.resizeCanvas.bind(this));
+    
+    // Mouse move event for particle interaction
+    if (this.options.mouseEffect) {
+      this.canvas.addEventListener('mousemove', (e) => {
+        const rect = this.canvas.getBoundingClientRect();
+        this.mouse.x = e.clientX - rect.left;
+        this.mouse.y = e.clientY - rect.top;
+      });
+      
+      this.canvas.addEventListener('mouseleave', () => {
+        this.mouse.x = null;
+        this.mouse.y = null;
+      });
+    }
     
     // Listen for dark mode changes
     const observer = new MutationObserver((mutations) => {
@@ -117,7 +134,8 @@ class Particles {
         vx: Math.random() * this.options.speed * this.options.directionX,
         vy: Math.random() * this.options.speed * this.options.directionY,
         radius: Math.random() * this.options.particleRadius + 1,
-        color: this.options.particleColor
+        color: this.options.particleColor,
+        originalRadius: Math.random() * this.options.particleRadius + 1
       });
     }
   }
@@ -127,6 +145,27 @@ class Particles {
     
     for (let i = 0; i < this.particles.length; i++) {
       const p = this.particles[i];
+      
+      // Mouse interaction
+      if (this.options.mouseEffect && this.mouse.x !== null && this.mouse.y !== null) {
+        const dx = this.mouse.x - p.x;
+        const dy = this.mouse.y - p.y;
+        const distance = Math.sqrt(dx * dx + dy * dy);
+        
+        if (distance < this.mouse.radius) {
+          const angle = Math.atan2(dy, dx);
+          const force = (this.mouse.radius - distance) / this.mouse.radius;
+          
+          // Push particles away from mouse
+          p.x -= Math.cos(angle) * force * 2;
+          p.y -= Math.sin(angle) * force * 2;
+          
+          // Scale particle size based on mouse proximity
+          p.radius = p.originalRadius * (1 + force);
+        } else {
+          p.radius = p.originalRadius;
+        }
+      }
       
       this.ctx.beginPath();
       this.ctx.arc(p.x, p.y, p.radius, 0, Math.PI * 2);
@@ -141,8 +180,9 @@ class Particles {
         const distance = Math.sqrt(dx * dx + dy * dy);
         
         if (distance < this.options.lineDistance) {
+          const opacity = (1 - distance / this.options.lineDistance) * 0.5;
           this.ctx.beginPath();
-          this.ctx.strokeStyle = this.options.lineColor;
+          this.ctx.strokeStyle = this.options.lineColor.replace('0.15', opacity);
           this.ctx.lineWidth = this.options.lineWidth;
           this.ctx.moveTo(p.x, p.y);
           this.ctx.lineTo(p2.x, p2.y);
