@@ -1,0 +1,435 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Shanmukha Chelluri - Software Developer</title>
+  <link rel="stylesheet" href="css/tailwind.css">
+  <link rel="stylesheet" href="css/styles.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+</head>
+<body class="font-inter bg-slate-50 text-slate-800 dark:bg-slate-900 dark:text-slate-200 transition-colors duration-300">
+  <!-- Background Animation Canvas -->
+  <canvas id="bg-canvas" class="fixed top-0 left-0 w-full h-full -z-10"></canvas>
+  
+  <!-- Header -->
+  <header id="header" class="fixed w-full py-4 bg-white/90 dark:bg-slate-900/90 backdrop-blur-sm shadow-sm z-50 transition-all duration-300">
+    <div class="container mx-auto px-4 md:px-8">
+      <nav class="flex justify-between items-center">
+        <div class="text-2xl font-bold text-blue-600 dark:text-blue-400">
+          SC<span class="text-slate-800 dark:text-slate-200">.</span>
+        </div>
+        
+        <button id="mobile-menu-btn" class="md:hidden text-slate-800 dark:text-slate-200">
+          <i class="fa-solid fa-bars text-xl"></i>
+        </button>
+        
+        <ul id="desktop-menu" class="hidden md:flex items-center space-x-6">
+          <li><a href="#home" class="nav-link active">Home</a></li>
+          <li><a href="#about" class="nav-link">About</a></li>
+          <li><a href="#experience" class="nav-link">Experience</a></li>
+          <li><a href="#projects" class="nav-link">Projects</a></li>
+          <li><a href="#education" class="nav-link">Education</a></li>
+          <li><a href="#contact" class="nav-link">Contact</a></li>
+          <li>
+            <button id="theme-toggle" class="ml-4 p-2 rounded-full bg-slate-200 dark:bg-slate-700 transition-colors">
+              <i class="fa-solid fa-moon dark:hidden"></i>
+              <i class="fa-solid fa-sun hidden dark:block"></i>
+            </button>
+          </li>
+        </ul>
+      </nav>
+    </div>
+    
+    <!-- Mobile Menu -->
+    <div id="mobile-menu" class="fixed top-[72px] left-0 w-full bg-white/95 dark:bg-slate-800/95 backdrop-blur-sm shadow-md transition-transform duration-300 transform translate-y-[-100%] md:hidden">
+      <ul class="container mx-auto py-4 px-8 space-y-4">
+        <li><a href="#home" class="mobile-nav-link active">Home</a></li>
+        <li><a href="#about" class="mobile-nav-link">About</a></li>
+        <li><a href="#experience" class="mobile-nav-link">Experience</a></li>
+        <li><a href="#projects" class="mobile-nav-link">Projects</a></li>
+        <li><a href="#education" class="mobile-nav-link">Education</a></li>
+        <li><a href="#contact" class="mobile-nav-link">Contact</a></li>
+        <li class="pt-2">
+          <button id="mobile-theme-toggle" class="p-2 rounded-full bg-slate-200 dark:bg-slate-700 transition-colors">
+            <i class="fa-solid fa-moon dark:hidden"></i>
+            <i class="fa-solid fa-sun hidden dark:block"></i>
+          </button>
+        </li>
+      </ul>
+    </div>
+  </header>
+
+  <!-- Main Content -->
+  <main>
+    <!-- Hero Section -->
+    <section id="home" class="min-h-screen flex items-center pt-24 pb-16">
+      <div class="container mx-auto px-4 md:px-8">
+        <div class="flex flex-col md:flex-row items-center">
+          <div class="md:w-1/2 mb-12 md:mb-0">
+            <h1 class="text-4xl md:text-5xl lg:text-6xl font-bold mb-4 relative">
+              <span class="block">Hi, I'm</span>
+              <span class="text-blue-600 dark:text-blue-400">Shanmukha Chelluri</span>
+            </h1>
+            <p class="text-xl md:text-2xl text-slate-600 dark:text-slate-400 mb-8">Software Development Engineer</p>
+            <p class="text-lg mb-8 max-w-xl">A results-driven developer specializing in full-stack development with expertise in React.js, Node.js, and PostgreSQL.</p>
+            <div class="flex flex-wrap gap-4">
+              <a href="#contact" class="btn-primary">
+                Contact Me <i class="fa-solid fa-arrow-right ml-2"></i>
+              </a>
+              <a href="#" class="btn-secondary" id="download-cv">
+                Download CV <i class="fa-solid fa-download ml-2"></i>
+              </a>
+            </div>
+            <div class="flex mt-8 space-x-4">
+              <a href="https://www.linkedin.com/in/shanmukha-chelluri-1b7809193" target="_blank" rel="noopener noreferrer" class="social-icon">
+                <i class="fa-brands fa-linkedin"></i>
+              </a>
+              <a href="https://github.com/shanmukhachelluri55" target="_blank" rel="noopener noreferrer" class="social-icon">
+                <i class="fa-brands fa-github"></i>
+              </a>
+              <a href="mailto:shanmukhachelluri55@gmail.com" class="social-icon">
+                <i class="fa-solid fa-envelope"></i>
+              </a>
+              <a href="tel:+919493308439" class="social-icon">
+                <i class="fa-solid fa-phone"></i>
+              </a>
+            </div>
+          </div>
+          <div class="md:w-1/2 flex justify-center">
+            <div class="profile-container">
+              <div class="profile-image">
+                <img src="https://images.pexels.com/photos/3758763/pexels-photo-3758763.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1" alt="Profile Illustration" class="rounded-full w-64 h-64 object-cover border-4 border-blue-500 dark:border-blue-400 shadow-lg">
+              </div>
+              <div class="tech-bubble html" title="HTML5">
+                <i class="fa-brands fa-html5"></i>
+              </div>
+              <div class="tech-bubble css" title="CSS3">
+                <i class="fa-brands fa-css3-alt"></i>
+              </div>
+              <div class="tech-bubble js" title="JavaScript">
+                <i class="fa-brands fa-js"></i>
+              </div>
+              <div class="tech-bubble react" title="React">
+                <i class="fa-brands fa-react"></i>
+              </div>
+              <div class="tech-bubble node" title="Node.js">
+                <i class="fa-brands fa-node-js"></i>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- About Section -->
+    <section id="about" class="py-20 bg-white/50 dark:bg-slate-800/50 backdrop-blur-sm">
+      <div class="container mx-auto px-4 md:px-8">
+        <h2 class="section-title">About Me</h2>
+        <div class="divider"></div>
+        
+        <div class="flex flex-col md:flex-row gap-12 mt-12">
+          <div class="md:w-1/2">
+            <p class="text-lg mb-6">
+              I'm a results-driven Software Development Engineer with expertise in architecting scalable solutions, optimizing performance, and ensuring system reliability. My journey in software development has led me to master various technologies and develop a passion for creating efficient, user-friendly applications.
+            </p>
+            <p class="text-lg mb-6">
+              With strong problem-solving skills and a knack for troubleshooting complex systems, I enjoy streamlining workflows and collaborating across teams to deliver high-quality software solutions. I am passionate about continuous learning, mentorship, and implementing robust testing methodologies for software excellence.
+            </p>
+            <p class="text-lg">
+              Currently working as a Senior Associate at Cognikey Technologies, I focus on developing innovative solutions like automated billing systems and role-based dashboards to improve business processes and customer experiences.
+            </p>
+          </div>
+          <div class="md:w-1/2">
+            <h3 class="text-2xl font-semibold mb-6">My Skills</h3>
+            
+            <div class="skills-container">
+              <div class="skill-category">
+                <h4 class="text-xl font-medium mb-4">Programming Languages</h4>
+                <div class="skills-grid">
+                  <div class="skill-item">JavaScript (ES6+)</div>
+                  <div class="skill-item">JAVA</div>
+                </div>
+              </div>
+              
+              <div class="skill-category">
+                <h4 class="text-xl font-medium mb-4">Frontend Technologies</h4>
+                <div class="skills-grid">
+                  <div class="skill-item">HTML5</div>
+                  <div class="skill-item">CSS3</div>
+                  <div class="skill-item">React.js</div>
+                  <div class="skill-item">Bootstrap</div>
+                </div>
+              </div>
+              
+              <div class="skill-category">
+                <h4 class="text-xl font-medium mb-4">Backend Technologies</h4>
+                <div class="skills-grid">
+                  <div class="skill-item">Node.js</div>
+                  <div class="skill-item">Express.js</div>
+                </div>
+              </div>
+              
+              <div class="skill-category">
+                <h4 class="text-xl font-medium mb-4">Database Management</h4>
+                <div class="skills-grid">
+                  <div class="skill-item">PostgreSQL</div>
+                  <div class="skill-item">SQL</div>
+                </div>
+              </div>
+              
+              <div class="skill-category">
+                <h4 class="text-xl font-medium mb-4">Version Control & DevOps</h4>
+                <div class="skills-grid">
+                  <div class="skill-item">Git</div>
+                  <div class="skill-item">GitHub</div>
+                  <div class="skill-item">GitLab</div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Experience Section -->
+    <section id="experience" class="py-20">
+      <div class="container mx-auto px-4 md:px-8">
+        <h2 class="section-title">Work Experience</h2>
+        <div class="divider"></div>
+        
+        <div class="timeline mt-12">
+          <!-- Cognikey Technologies -->
+          <div class="timeline-item">
+            <div class="timeline-dot"></div>
+            <div class="timeline-date">
+              <span>Mar 2024 - Present</span>
+            </div>
+            <div class="timeline-content">
+              <h3 class="text-2xl font-semibold">Senior Associate</h3>
+              <h4 class="text-xl text-blue-600 dark:text-blue-400 mb-4">Cognikey Technologies</h4>
+              <ul class="list-disc pl-5 space-y-2">
+                <li>Designed and developed an automated billing system, reducing transaction errors by 30% and improving accuracy.</li>
+                <li>Implemented a role-based dashboard system, enhancing workflow efficiency across cashiers, inventory managers, and finance teams.</li>
+                <li>Built an Inventory Management Dashboard to track stock levels, automate restocking, and reduce stock shortages by 25%.</li>
+                <li>Integrated Razorpay for secure online payments, leading to a 20% increase in digital transactions.</li>
+                <li>Developed a Finance Dashboard to monitor payments, refunds, and revenue analytics, improving financial tracking by 40%.</li>
+                <li>Created a Loyalty Points System, increasing customer retention and boosting repeat purchases by 15%.</li>
+              </ul>
+            </div>
+          </div>
+          
+          <!-- Hexagon Capability Center -->
+          <div class="timeline-item">
+            <div class="timeline-dot"></div>
+            <div class="timeline-date">
+              <span>Dec 2022 - Jul 2023</span>
+            </div>
+            <div class="timeline-content">
+              <h3 class="text-2xl font-semibold">Internship</h3>
+              <h4 class="text-xl text-blue-600 dark:text-blue-400 mb-4">Hexagon Capability Center</h4>
+              <ul class="list-disc pl-5 space-y-2">
+                <li>Developed a centralized web application using React.js to manage and monitor 100+ measuring machines across multiple sites.</li>
+                <li>Designed a user-friendly dashboard for resource allocation, improving operational efficiency by 20%.</li>
+                <li>Integrated real-time monitoring and notifications, reducing downtime and enabling proactive issue resolution.</li>
+                <li>Managed metrology assets and optimized measurement device usage through PC-DMIS software, improving accuracy.</li>
+                <li>Enhanced UI elements in a web-based tool, collaborating with senior developers to boost user engagement by 15%.</li>
+              </ul>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+    
+    <!-- Projects Section -->
+    <section id="projects" class="py-20 bg-white/50 dark:bg-slate-800/50 backdrop-blur-sm">
+      <div class="container mx-auto px-4 md:px-8">
+        <h2 class="section-title">Projects</h2>
+        <div class="divider"></div>
+        
+        <div class="mt-12 grid grid-cols-1 lg:grid-cols-1 gap-8">
+          <!-- PAYAMMU Project -->
+          <div class="project-card">
+            <div class="md:flex">
+              <div class="md:w-2/5 mb-6 md:mb-0 md:pr-8">
+                <img src="https://images.pexels.com/photos/8369648/pexels-photo-8369648.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1" alt="PAYAMMU Project" class="w-full h-64 object-cover rounded-lg shadow-md">
+              </div>
+              <div class="md:w-3/5">
+                <div class="flex justify-between items-start mb-4">
+                  <h3 class="text-2xl font-semibold">PAYAMMU</h3>
+                  <div class="text-sm text-slate-600 dark:text-slate-400">May 2024 - May 2025</div>
+                </div>
+                <div class="mb-4">
+                  <a href="https://payammu.com/" target="_blank" rel="noopener noreferrer" class="text-blue-600 dark:text-blue-400 hover:underline inline-flex items-center">
+                    <i class="fa-solid fa-link mr-2"></i> payammu.com
+                  </a>
+                </div>
+                <div class="project-description mb-6">
+                  <p class="mb-4">A comprehensive payment and billing system developed for Cognikey Technologies, featuring role-based dashboards, inventory management, and financial analytics.</p>
+                  <div class="project-features">
+                    <div class="feature">
+                      <h4 class="text-lg font-medium mb-2">Frontend & Backend</h4>
+                      <p>Developed a responsive UI with React.js and Redux, optimizing performance for over 1,000+ daily users. Built a secure Node.js and Express.js backend, implementing JWT authentication to manage access for multiple user roles.</p>
+                    </div>
+                    <div class="feature">
+                      <h4 class="text-lg font-medium mb-2">Database & Payments</h4>
+                      <p>Designed an optimized PostgreSQL database handling 10,000+ transactions/month. Integrated Razorpay API, streamlining digital payments and increasing online transaction volume by 20%.</p>
+                    </div>
+                    <div class="feature">
+                      <h4 class="text-lg font-medium mb-2">Key Features & Achievements</h4>
+                      <p>Implemented role-based dashboards, improving workflow efficiency by 30%. Developed automated inventory tracking, reducing stock shortages by 25%. Built financial analytics tools that enhanced revenue tracking accuracy by 40%. Introduced a Loyalty Points System, increasing customer retention and repeat purchases by 15%.</p>
+                    </div>
+                  </div>
+                </div>
+                <div class="tech-stack flex flex-wrap gap-2 mb-4">
+                  <span class="tech-tag">React.js</span>
+                  <span class="tech-tag">Redux</span>
+                  <span class="tech-tag">Node.js</span>
+                  <span class="tech-tag">Express.js</span>
+                  <span class="tech-tag">PostgreSQL</span>
+                  <span class="tech-tag">JWT</span>
+                  <span class="tech-tag">Razorpay API</span>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+    
+    <!-- Education Section -->
+    <section id="education" class="py-20">
+      <div class="container mx-auto px-4 md:px-8">
+        <h2 class="section-title">Education</h2>
+        <div class="divider"></div>
+        
+        <div class="mt-12 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+          <!-- Bachelor's Degree -->
+          <div class="education-card">
+            <div class="education-year">2023</div>
+            <h3 class="text-xl font-semibold mb-2">Bachelor of Computer Science and Engineering</h3>
+            <h4 class="text-lg text-blue-600 dark:text-blue-400 mb-4">Chandigarh University, Mohali</h4>
+            <p class="mb-4">CGPA: 7.0/10</p>
+            <ul class="list-disc pl-5 space-y-2">
+              <li>Served as Class Representative (CR) during the 2nd and 3rd years in college, demonstrating leadership and organizational skills.</li>
+              <li>Awarded a 30% Scholarship based on outstanding intermediate marks, recognizing academic excellence and dedication.</li>
+            </ul>
+          </div>
+          
+          <!-- Intermediate Education -->
+          <div class="education-card">
+            <div class="education-year">2019</div>
+            <h3 class="text-xl font-semibold mb-2">Board of Intermediate Education, Andhra Pradesh (BIEAP)</h3>
+            <h4 class="text-lg text-blue-600 dark:text-blue-400 mb-4">Narayana Junior College, Vijayawada</h4>
+            <p class="mb-4">Grade: 9.3/10</p>
+            <p>Minor in Mathematics</p>
+          </div>
+          
+          <!-- Secondary Education -->
+          <div class="education-card">
+            <div class="education-year">2017</div>
+            <h3 class="text-xl font-semibold mb-2">Board of Secondary Education, Andhra Pradesh (BSEAP)</h3>
+            <h4 class="text-lg text-blue-600 dark:text-blue-400 mb-4">St. Anne's High School, Chintapalle</h4>
+            <p class="mb-4">Grade: 8.0/10</p>
+            <ul class="list-disc pl-5 space-y-2">
+              <li>Won 3rd Place in Javelin Throw at a school sports event, demonstrating athletic skill, discipline, and dedication.</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </section>
+    
+    <!-- Contact Section -->
+    <section id="contact" class="py-20 bg-white/50 dark:bg-slate-800/50 backdrop-blur-sm">
+      <div class="container mx-auto px-4 md:px-8">
+        <h2 class="section-title">Get In Touch</h2>
+        <div class="divider"></div>
+        
+        <div class="flex flex-col md:flex-row gap-12 mt-12">
+          <div class="md:w-1/2">
+            <p class="text-lg mb-8">I'm interested in freelance opportunities and full-time positions. If you have any questions or would like to discuss potential collaborations, feel free to contact me.</p>
+            
+            <div class="contact-info mb-8">
+              <div class="contact-item">
+                <i class="fa-solid fa-envelope text-blue-600 dark:text-blue-400"></i>
+                <span>shanmukhachelluri55@gmail.com</span>
+              </div>
+              <div class="contact-item">
+                <i class="fa-solid fa-phone text-blue-600 dark:text-blue-400"></i>
+                <span>+91 9493308439</span>
+              </div>
+              <div class="contact-item">
+                <i class="fa-solid fa-location-dot text-blue-600 dark:text-blue-400"></i>
+                <span>Hyderabad, India</span>
+              </div>
+            </div>
+            
+            <div class="social-links">
+              <h3 class="text-xl font-semibold mb-4">Find me on</h3>
+              <div class="flex space-x-4">
+                <a href="https://www.linkedin.com/in/shanmukha-chelluri-1b7809193" target="_blank" rel="noopener noreferrer" class="social-icon">
+                  <i class="fa-brands fa-linkedin"></i>
+                </a>
+                <a href="https://github.com/shanmukhachelluri55" target="_blank" rel="noopener noreferrer" class="social-icon">
+                  <i class="fa-brands fa-github"></i>
+                </a>
+              </div>
+            </div>
+          </div>
+          
+          <div class="md:w-1/2">
+            <form id="contact-form" class="contact-form">
+              <div class="mb-6">
+                <label for="name" class="block text-sm font-medium mb-2">Your Name</label>
+                <input type="text" id="name" name="name" class="w-full p-3 border border-slate-300 dark:border-slate-600 rounded-lg bg-white dark:bg-slate-700 focus:outline-none focus:ring-2 focus:ring-blue-500" required>
+              </div>
+              
+              <div class="mb-6">
+                <label for="email" class="block text-sm font-medium mb-2">Your Email</label>
+                <input type="email" id="email" name="email" class="w-full p-3 border border-slate-300 dark:border-slate-600 rounded-lg bg-white dark:bg-slate-700 focus:outline-none focus:ring-2 focus:ring-blue-500" required>
+              </div>
+              
+              <div class="mb-6">
+                <label for="subject" class="block text-sm font-medium mb-2">Subject</label>
+                <input type="text" id="subject" name="subject" class="w-full p-3 border border-slate-300 dark:border-slate-600 rounded-lg bg-white dark:bg-slate-700 focus:outline-none focus:ring-2 focus:ring-blue-500" required>
+              </div>
+              
+              <div class="mb-6">
+                <label for="message" class="block text-sm font-medium mb-2">Your Message</label>
+                <textarea id="message" name="message" rows="5" class="w-full p-3 border border-slate-300 dark:border-slate-600 rounded-lg bg-white dark:bg-slate-700 focus:outline-none focus:ring-2 focus:ring-blue-500" required></textarea>
+              </div>
+              
+              <button type="submit" class="btn-primary w-full">
+                Send Message <i class="fa-solid fa-paper-plane ml-2"></i>
+              </button>
+            </form>
+          </div>
+        </div>
+      </div>
+    </section>
+  </main>
+  
+  <!-- Footer -->
+  <footer class="py-8 bg-slate-800 dark:bg-slate-900 text-white">
+    <div class="container mx-auto px-4 md:px-8 text-center">
+      <div class="text-2xl font-bold text-blue-400 mb-4">
+        SC<span class="text-white">.</span>
+      </div>
+      <p class="mb-4">&copy; 2024 Shanmukha Chelluri. All rights reserved.</p>
+      <p class="text-slate-400">Designed with passion</p>
+    </div>
+  </footer>
+  
+  <!-- Scroll to Top Button -->
+  <button id="scroll-top" class="fixed bottom-6 right-6 p-4 bg-blue-600 text-white rounded-full shadow-lg opacity-0 transition-opacity duration-300">
+    <i class="fa-solid fa-arrow-up"></i>
+  </button>
+  
+  <!-- Scripts -->
+  <script src="js/particles.js"></script>
+  <script src="js/main.js"></script>
+</body>
+</html>

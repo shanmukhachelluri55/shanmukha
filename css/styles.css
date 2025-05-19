@@ -1,0 +1,379 @@
+/* Base Styles */
+body {
+  font-family: 'Inter', sans-serif;
+  scroll-behavior: smooth;
+  overflow-x: hidden;
+}
+
+/* This fixes the scrolling issue with position:fixed elements */
+html.has-scroll-smooth {
+  overflow: hidden;
+}
+
+/* Skills Grid */
+.skills-container {
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+}
+
+.skill-category {
+  margin-bottom: 1rem;
+}
+
+.skills-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(140px, 1fr));
+  gap: 0.75rem;
+}
+
+/* Profile Section */
+.profile-container {
+  position: relative;
+  width: 300px;
+  height: 300px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.profile-image {
+  animation: float 6s ease-in-out infinite;
+}
+
+@keyframes float {
+  0% {
+    transform: translateY(0px);
+  }
+  50% {
+    transform: translateY(-10px);
+  }
+  100% {
+    transform: translateY(0px);
+  }
+}
+
+.tech-bubble {
+  position: absolute;
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: white;
+  font-size: 1.2rem;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+.tech-bubble.html {
+  background-color: #e34c26;
+  top: 20%;
+  left: 5%;
+  animation: bubble-float 5s ease-in-out infinite;
+}
+
+.tech-bubble.css {
+  background-color: #264de4;
+  top: 10%;
+  right: 10%;
+  animation: bubble-float 5s ease-in-out infinite 0.5s;
+}
+
+.tech-bubble.js {
+  background-color: #f7df1e;
+  color: #000;
+  bottom: 20%;
+  left: 5%;
+  animation: bubble-float 5s ease-in-out infinite 1s;
+}
+
+.tech-bubble.react {
+  background-color: #61dafb;
+  color: #000;
+  bottom: 10%;
+  right: 15%;
+  animation: bubble-float 5s ease-in-out infinite 1.5s;
+}
+
+.tech-bubble.node {
+  background-color: #68a063;
+  top: 50%;
+  right: 0;
+  animation: bubble-float 5s ease-in-out infinite 2s;
+}
+
+@keyframes bubble-float {
+  0% {
+    transform: translateY(0) rotate(0deg);
+  }
+  50% {
+    transform: translateY(-10px) rotate(5deg);
+  }
+  100% {
+    transform: translateY(0) rotate(0deg);
+  }
+}
+
+/* Timeline */
+.timeline {
+  position: relative;
+  padding-left: 2rem;
+}
+
+.timeline:before {
+  content: '';
+  position: absolute;
+  left: 0;
+  top: 0;
+  height: 100%;
+  width: 2px;
+  background-color: #e5e7eb;
+}
+
+.dark .timeline:before {
+  background-color: #4b5563;
+}
+
+.timeline-item {
+  position: relative;
+  padding-bottom: 3rem;
+}
+
+.timeline-item:last-child {
+  padding-bottom: 0;
+}
+
+.timeline-dot {
+  position: absolute;
+  left: -2.25rem;
+  width: 1rem;
+  height: 1rem;
+  border-radius: 50%;
+  background-color: #3b82f6;
+  border: 2px solid white;
+  z-index: 1;
+}
+
+.dark .timeline-dot {
+  border-color: #1f2937;
+}
+
+.timeline-date {
+  font-size: 0.875rem;
+  color: #6b7280;
+  margin-bottom: 0.5rem;
+  font-weight: 500;
+}
+
+.dark .timeline-date {
+  color: #9ca3af;
+}
+
+.timeline-content {
+  background-color: white;
+  padding: 1.5rem;
+  border-radius: 0.5rem;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+}
+
+.dark .timeline-content {
+  background-color: #374151;
+}
+
+/* Project Cards */
+.project-card {
+  background-color: white;
+  border-radius: 0.5rem;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  padding: 1.5rem;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.dark .project-card {
+  background-color: #374151;
+}
+
+.project-card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 10px 15px rgba(0, 0, 0, 0.1);
+}
+
+.project-features {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+  margin-top: 1rem;
+}
+
+.feature {
+  border-left: 3px solid #3b82f6;
+  padding-left: 1rem;
+}
+
+.dark .feature {
+  border-left-color: #60a5fa;
+}
+
+/* Education Cards */
+.education-card {
+  background-color: white;
+  border-radius: 0.5rem;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  padding: 1.5rem;
+  position: relative;
+  overflow: hidden;
+  transition: transform 0.3s ease;
+}
+
+.dark .education-card {
+  background-color: #374151;
+}
+
+.education-card:hover {
+  transform: translateY(-5px);
+}
+
+.education-year {
+  position: absolute;
+  top: 0;
+  right: 0;
+  background-color: #3b82f6;
+  color: white;
+  padding: 0.25rem 1rem;
+  border-radius: 0 0 0 0.5rem;
+  font-weight: 600;
+  font-size: 0.875rem;
+}
+
+.dark .education-year {
+  background-color: #60a5fa;
+}
+
+/* Contact Form */
+.contact-form input,
+.contact-form textarea {
+  width: 100%;
+  padding: 0.75rem 1rem;
+  border: 1px solid #e5e7eb;
+  border-radius: 0.5rem;
+  transition: border-color 0.3s ease, box-shadow 0.3s ease;
+}
+
+.dark .contact-form input,
+.dark .contact-form textarea {
+  border-color: #4b5563;
+  background-color: #1f2937;
+  color: #e5e7eb;
+}
+
+.contact-form input:focus,
+.contact-form textarea:focus {
+  outline: none;
+  border-color: #3b82f6;
+  box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.2);
+}
+
+.contact-info {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+
+.contact-item {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+}
+
+.contact-item i {
+  width: 2rem;
+  height: 2rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 50%;
+  background-color: rgba(59, 130, 246, 0.1);
+}
+
+/* Scroll Top Button */
+#scroll-top {
+  visibility: hidden;
+  opacity: 0;
+  transition: visibility 0.3s, opacity 0.3s;
+}
+
+#scroll-top.visible {
+  visibility: visible;
+  opacity: 1;
+}
+
+/* Animation Classes */
+.fade-in {
+  opacity: 0;
+  animation: fadeIn 1s forwards;
+}
+
+.slide-up {
+  opacity: 0;
+  transform: translateY(50px);
+  animation: slideUp 1s forwards;
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+@keyframes slideUp {
+  from {
+    opacity: 0;
+    transform: translateY(50px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* Responsive Adjustments */
+@media (max-width: 768px) {
+  .tech-bubble {
+    width: 30px;
+    height: 30px;
+    font-size: 1rem;
+  }
+  
+  .profile-container {
+    width: 250px;
+    height: 250px;
+  }
+  
+  .profile-image img {
+    width: 180px;
+    height: 180px;
+  }
+  
+  .timeline {
+    padding-left: 1.5rem;
+  }
+  
+  .timeline-dot {
+    left: -1.75rem;
+  }
+}
+
+/* Adjust the project card layout for very small screens */
+@media (max-width: 480px) {
+  .project-features {
+    gap: 1.5rem;
+  }
+  
+  .tech-tag {
+    margin-bottom: 0.5rem;
+  }
+}
