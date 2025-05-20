@@ -15,7 +15,13 @@ class Particles {
       directionX: -1,
       directionY: 1,
       mouseEffect: true,
-      mouseRadius: 100,
+      mouseRadius: 150,
+      mousePush: true,
+      mouseAttract: false,
+      mouseForce: 2,
+      particleLife: 3,
+      particleLifeVariance: 1,
+      particleFade: true,
       responsive: [
         {
           breakpoint: 768,
@@ -40,7 +46,15 @@ class Particles {
     this.particles = [];
     this.animationFrame = null;
     this.isDarkMode = document.documentElement.classList.contains('dark');
-    this.mouse = { x: null, y: null, radius: this.options.mouseRadius };
+    this.mouse = { 
+      x: null, 
+      y: null, 
+      radius: this.options.mouseRadius,
+      lastX: null,
+      lastY: null,
+      velocityX: 0,
+      velocityY: 0
+    };
     
     this.init();
     this.bindEvents();
@@ -59,21 +73,30 @@ class Particles {
   bindEvents() {
     window.addEventListener('resize', this.resizeCanvas.bind(this));
     
-    // Mouse move event for particle interaction
     if (this.options.mouseEffect) {
       this.canvas.addEventListener('mousemove', (e) => {
         const rect = this.canvas.getBoundingClientRect();
+        
+        // Store last position for velocity calculation
+        this.mouse.lastX = this.mouse.x || e.clientX - rect.left;
+        this.mouse.lastY = this.mouse.y || e.clientY - rect.top;
+        
         this.mouse.x = e.clientX - rect.left;
         this.mouse.y = e.clientY - rect.top;
+        
+        // Calculate mouse velocity
+        this.mouse.velocityX = this.mouse.x - this.mouse.lastX;
+        this.mouse.velocityY = this.mouse.y - this.mouse.lastY;
       });
       
       this.canvas.addEventListener('mouseleave', () => {
         this.mouse.x = null;
         this.mouse.y = null;
+        this.mouse.velocityX = 0;
+        this.mouse.velocityY = 0;
       });
     }
     
-    // Listen for dark mode changes
     const observer = new MutationObserver((mutations) => {
       mutations.forEach((mutation) => {
         if (mutation.attributeName === 'class') {
@@ -109,7 +132,6 @@ class Particles {
     this.canvas.width = this.width;
     this.canvas.height = this.height;
     
-    // Update options based on screen size
     if (this.options.responsive) {
       for (const item of this.options.responsive) {
         if (window.innerWidth <= item.breakpoint) {
@@ -119,24 +141,29 @@ class Particles {
       }
     }
     
-    // Re-create particles when canvas is resized
     if (this.particles.length) {
       this.particles = [];
       this.createParticles();
     }
   }
   
+  createParticle() {
+    return {
+      x: Math.random() * this.width,
+      y: Math.random() * this.height,
+      vx: (Math.random() - 0.5) * this.options.speed,
+      vy: (Math.random() - 0.5) * this.options.speed,
+      radius: Math.random() * this.options.particleRadius + 1,
+      color: this.options.particleColor,
+      originalRadius: Math.random() * this.options.particleRadius + 1,
+      life: this.options.particleLife + (Math.random() - 0.5) * this.options.particleLifeVariance,
+      opacity: 1
+    };
+  }
+  
   createParticles() {
     for (let i = 0; i < this.options.particleCount; i++) {
-      this.particles.push({
-        x: Math.random() * this.width,
-        y: Math.random() * this.height,
-        vx: Math.random() * this.options.speed * this.options.directionX,
-        vy: Math.random() * this.options.speed * this.options.directionY,
-        radius: Math.random() * this.options.particleRadius + 1,
-        color: this.options.particleColor,
-        originalRadius: Math.random() * this.options.particleRadius + 1
-      });
+      this.particles.push(this.createParticle());
     }
   }
   
@@ -146,7 +173,6 @@ class Particles {
     for (let i = 0; i < this.particles.length; i++) {
       const p = this.particles[i];
       
-      // Mouse interaction
       if (this.options.mouseEffect && this.mouse.x !== null && this.mouse.y !== null) {
         const dx = this.mouse.x - p.x;
         const dy = this.mouse.y - p.y;
@@ -156,9 +182,17 @@ class Particles {
           const angle = Math.atan2(dy, dx);
           const force = (this.mouse.radius - distance) / this.mouse.radius;
           
-          // Push particles away from mouse
-          p.x -= Math.cos(angle) * force * 2;
-          p.y -= Math.sin(angle) * force * 2;
+          if (this.options.mousePush) {
+            // Push particles away from mouse
+            p.vx -= Math.cos(angle) * force * this.options.mouseForce;
+            p.vy -= Math.sin(angle) * force * this.options.mouseForce;
+          }
+          
+          if (this.options.mouseAttract) {
+            // Add mouse velocity influence
+            p.vx += this.mouse.velocityX * force * 0.1;
+            p.vy += this.mouse.velocityY * force * 0.1;
+          }
           
           // Scale particle size based on mouse proximity
           p.radius = p.originalRadius * (1 + force);
@@ -167,12 +201,13 @@ class Particles {
         }
       }
       
+      // Draw particle with opacity
       this.ctx.beginPath();
       this.ctx.arc(p.x, p.y, p.radius, 0, Math.PI * 2);
-      this.ctx.fillStyle = p.color;
+      this.ctx.fillStyle = p.color.replace(')', `, ${p.opacity})`);
       this.ctx.fill();
       
-      // Draw lines between particles
+      // Draw connections
       for (let j = i + 1; j < this.particles.length; j++) {
         const p2 = this.particles[j];
         const dx = p.x - p2.x;
@@ -180,7 +215,7 @@ class Particles {
         const distance = Math.sqrt(dx * dx + dy * dy);
         
         if (distance < this.options.lineDistance) {
-          const opacity = (1 - distance / this.options.lineDistance) * 0.5;
+          const opacity = (1 - distance / this.options.lineDistance) * 0.5 * p.opacity * p2.opacity;
           this.ctx.beginPath();
           this.ctx.strokeStyle = this.options.lineColor.replace('0.15', opacity);
           this.ctx.lineWidth = this.options.lineWidth;
@@ -193,22 +228,38 @@ class Particles {
   }
   
   updateParticles() {
-    for (const p of this.particles) {
+    for (let i = this.particles.length - 1; i >= 0; i--) {
+      const p = this.particles[i];
+      
+      // Update position
       p.x += p.vx;
       p.y += p.vy;
       
-      // Bounce off the edges
+      // Apply friction
+      p.vx *= 0.99;
+      p.vy *= 0.99;
+      
+      // Bounce off edges
       if (p.x <= 0 || p.x >= this.width) {
-        p.vx = -p.vx;
+        p.vx = -p.vx * 0.8;
+        p.x = Math.max(0, Math.min(p.x, this.width));
       }
       
       if (p.y <= 0 || p.y >= this.height) {
-        p.vy = -p.vy;
+        p.vy = -p.vy * 0.8;
+        p.y = Math.max(0, Math.min(p.y, this.height));
       }
       
-      // Keep particles within the canvas
-      p.x = Math.max(0, Math.min(p.x, this.width));
-      p.y = Math.max(0, Math.min(p.y, this.height));
+      // Update particle life and opacity
+      if (this.options.particleFade) {
+        p.life -= 0.01;
+        p.opacity = Math.max(0, Math.min(1, p.life));
+        
+        if (p.life <= 0) {
+          this.particles.splice(i, 1);
+          this.particles.push(this.createParticle());
+        }
+      }
     }
   }
   
